@@ -1,0 +1,36 @@
+{
+  "name": "wifiadmin",
+  "version": "1.0.0",
+  "description": "Sistema para administrar usuarios de free radius para autenticacion wifi domestica o comercial",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Test Success\"",
+    "dev": "node --watch app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ceab-1390/WifiAdmin.git"
+  },
+  "author": "Cesar Avila",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ceab-1390/WifiAdmin/issues"
+  },
+  "homepage": "https://github.com/ceab-1390/WifiAdmin#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "bootstrap": "^5.3.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-ejs": "^2.0.0",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
+    "node-pg-migrate": "^7.3.2",
+    "pg": "^8.11.5",
+    "sweetalert2": "^11.11.0"
+  }
+}
