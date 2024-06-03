@@ -1,9 +1,9 @@
 
-<div class="card">
-    <div class="card-header">
-        <div class="row">
+<div class="card table-responsive">
+    <div class="card-header table-responsive">
+        <div class="row table-responsive">
             <div class="col-sm-10"><h1 class="text-center">AP, Routers, Wifi</h1></div>
-            <div class="col-sm-1 mt-1"><button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#newUser">Registrar</button></div>
+            <div class="col-sm-1 mt-1"><button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#nasCreate">Registrar</button></div>
         </div>
     </div>
     <div class="card-body">
@@ -34,13 +34,155 @@
                     <td class="text-center"><%=nas.description%></td>
                     <td class="text-center" >
                         <div class="btn-groiup text-center" role="group">
-                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#">Editar</button>
-                            <button class="btn btn-danger btn-sm" onclick="">Eliminar</button>
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#nasEdit_<%=nas.id%>">Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteDevice('/nasDelete','<%=nas.id%>')">Eliminar</button>
                         </div>
                     </td>
+
                 </tr>
+                 <!-- Modal Edit-->
+                 <div class="modal fade" id="nasEdit_<%=nas.id%>" tabindex="-1" aria-labelledby="exampleModalLabel_<%=user.id%>" aria-hidden="true">
+                     <div class="modal-dialog">
+                     <div class="modal-content">
+                         <div class="modal-header">
+                         <h5 class="modal-title" id="exampleModalLabel">Editar Dispositivo</h5>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                         </div>
+                         <div class="modal-body">
+                         <form action="/showNas/edit" method="post" id="editForm_<%=nas.id%>" novalidate onsubmit="validateForm3(this,'nasEdit_<%=nas.id%>')">
+                             <input type="hidden" name="id" id="id" value="<%=nas.id%>">
+                             <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" value="<%=nas.nasname%>" name="nasname" id="nasname" placeholder="Nombre de Usuario" required pattern="^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$">
+                                 <label for="nasname">IP</label>
+                                 <div class="invalid-feedback">
+                                     Ej: 192.168.1.5
+                                 </div>
+                             </div>
+                             <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" value="<%=nas.shortname%>" name="shortname" id="shortname" placeholder="Nombre" required pattern="[a-zA-Z0-9 ]{1,50}">
+                                 <label for="nombre">Nombre</label>
+                                 <div class="invalid-feedback">
+                                     No se admiten caracteres especiales.
+                                 </div>
+                             </div>
+                             <div class="form-floating form-group mb-3">
+                                <select class="form-control" id="type" name="type" required>
+                                    <option value="<%=nas.type%>" selected hidden><%=nas.type%></option>
+                                <%nasTypes.forEach(type =>{%>
+                                  <option value="<%=type.type%>"><%=type.type%></option>
+                                <%})%>
+                                </select>
+                                <label for="type">Tipo</label>
+                                <div class="invalid-feedback">
+                                    Solo se admiten letras
+                                </div>
+                            </div>
+                             <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" value="<%=nas.ports%>" name="ports" id="ports" placeholder="Puertos" pattern="[,0-9]{1,100}">
+                                 <label for="apellido">Puertos</label>
+                                 <div class="invalid-feedback">
+                                     Ej: 80,443
+                                 </div>
+                             </div>
+                             <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" value="<%=nas.secret%>" name="secret" id="secret_<%=nas.id%>" placeholder="Contraseña" required pattern="\S+"> 
+                                 <label for="secret">Contraseña</label>
+                                 <div class="invalid-feedback">
+                                     No se admiten espacios en blanco
+                                 </div>
+                             </div>
+                             <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" value="<%=nas.server%>" name="server" id="server_<%=nas.id%>" placeholder="Servidor">
+                                 <label for="server">Servidor</label>
+                             </div>
+                             <div class="form-floating mb-3">
+                                <input type="text" class="form-control" value="<%=nas.community%>" name="community" id="community" placeholder="Comunidad">
+                                <label for="community">Comunidad</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" value="<%=nas.description%>" name="description" id="description" placeholder="Descripcion" >
+                                <label for="descripcion">Descripcion</label>
+                            </div>
+                         </div>
+                         <div class="modal-footer">
+                             <button type="submit" id="<%=nas.id%>" class="btn btn-primary" >Guardar cambios</button>
+                         </form>
+                         </div>
+                     </div>
+                     </div>
+                 </div>
                 <%})%>
             </tbody>
         </table>
     </div>
+    <!-- Modal Create-->
+<div class="modal fade" id="nasCreate" tabindex="-1" aria-labelledby="nasCreate" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nuevo Dispositivo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+        <form action="/showNas/create" method="post" id="createForm" novalidate class="needs-validation">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="nasname" id="nasname" placeholder="Nombre de Usuario" required pattern="^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$">
+                <label for="nasname">IP</label>
+                <div class="invalid-feedback">
+                    Ej: 192.168.1.5
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control"  name="shortname" id="shortname" placeholder="Nombre" required pattern="[a-zA-Z0-9 ]{1,50}">
+                <label for="nombre">Nombre</label>
+                <div class="invalid-feedback">
+                    No se admiten caracteres especiales.
+                </div>
+            </div>
+            <div class="form-floating form-group mb-3">
+               <select class="form-control" id="type" name="type" required>
+                   <option value="" selected hidden>Elegir uno</option>
+               <%nasTypes.forEach(type =>{%>
+                 <option value="<%=type.type%>"><%=type.type%></option>
+               <%})%>
+               </select>
+               <label for="type">Tipo</label>
+               <div class="invalid-feedback">
+                   Solo se admiten letras
+               </div>
+           </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="ports" id="ports" placeholder="Puertos" pattern="[0-9]{1,100}">
+                <label for="apellido">Puertos</label>
+                <div class="invalid-feedback">
+                    Ej: 8000
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="secret" id="secret" placeholder="Contraseña" required pattern="\S+"> 
+                <label for="secret">Contraseña</label>
+                <div class="invalid-feedback">
+                    No se admiten espacios en blanco
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="server" id="server" placeholder="Servidor">
+                <label for="server">Servidor</label>
+            </div>
+            <div class="form-floating mb-3">
+               <input type="text" class="form-control" name="community" id="community" placeholder="Comunidad">
+               <label for="community">Comunidad</label>
+           </div>
+           <div class="form-floating mb-3">
+               <input type="text" class="form-control" name="description" id="description" placeholder="Tipo" pattern="[a-zA-Z ]{4,20}">
+               <label for="descripcion">Descripcion</label>
+           </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" id="" class="btn btn-primary" >Guardar cambios</button>
+        </form>
+        </div>
+    </div>
+    </div>
+ </div>
 </div>

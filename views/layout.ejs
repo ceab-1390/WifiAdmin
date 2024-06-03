@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/icons/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/styles.css">
     <title> <%- title %></title>
 </head>
 <body class="bg-light">
   <div class="container-fluid ">
     <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-blue-glass ">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-blue-glass">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2  min-vh-100">
                 <a href="/home" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-light text-decoration-none">
-                    <span class="fs-5 d-none d-sm-inline">Menu</span>
+                  <i class="fs-4 bi-list"></i> <span class="fs-5 d-none d-sm-inline">Menu</span>
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start " id="menu">
                     <li class="nav-item">
@@ -23,49 +24,59 @@
                     </li>
                     <li>
                         <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-light">
-                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Usuarios del sistema</span> </a>
+                            <i class="fs-4 bi-person"></i> <span class="ms-1 d-none d-sm-inline"> Usuarios del sistema</span> </a>
                         <ul class="collapse  nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                           <%if(user.admin){%>
                             <li class="w-100">
-                                <a href="/usersManage" class="nav-link px-0 text-light"> <span class="d-none d-sm-inline">Gestionar</span></a>
+                                <a href="/usersManage" class="nav-link px-0 text-light"><i class="bi bi-people"></i> <span class="d-none d-sm-inline"> Gestionar</span></a>
                             </li>
                           <%}%>
                             <li>
-                                <a href="#" class="nav-link px-0 text-light " data-bs-toggle="modal" data-bs-target="#editUser_<%=user.user%>"> <span class="d-none d-sm-inline">Cambiar mi clave</span></a>
+                                <a href="#" class="nav-link px-0 text-light " data-bs-toggle="modal" data-bs-target="#editUser_<%=user.user%>"> <i class="bi bi-key"></i><span class="d-none d-sm-inline"> Cambiar mi clave</span></a>
                             </li>
                         </ul>
                     </li>
+
                     <li>
-                        <a href="/usersWifi" class="nav-link px-0 align-middle text-light">
-                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Usuarios WIFI</span> </a>
+                      <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-light">
+                          <i class="fs-4 bi-router"></i> <span class="ms-1 d-none d-sm-inline">Gestion de la red</span> </a>
+                      <ul class="collapse  nav flex-column ms-1" id="submenu2" data-bs-parent="#menu2">
+                          <li class="w-100">
+                              <a href="/showNas" class="nav-link px-0 text-light"> <i class="bi bi-wifi"></i><span class="d-none d-sm-inline"> Dispositivos</span></a>
+                          </li>
+                          <li>
+                              <a href="/usersRadius/1" class="nav-link px-0 text-light "><i class="bi bi-person-add"></i> <span class="d-none d-sm-inline"> Usuarios de red</span></a>
+                          </li>
+                          <li>
+                            <a href="/auditRadius/1" class="nav-link px-0 text-light "> <i class="bi bi-eye"></i><span class="d-none d-sm-inline"> Auditoria</span></a>
+                        </li>
+                      </ul>
                     </li>
                 </ul>
-
                 <hr>
-                <div class="dropdown pb-4">
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="/public/img/User.png" alt="hugenerd" width="50" height="50" class="rounded-circle">
-                        <span class="d-none d-sm-inline mx-1 text-small"></span>
+                <div class="pb-4">
+                    <a href="/logout" class="d-flex align-items-center text-white text-decoration-none " id="dropdownUser1">
+                        <i class="fs-5 bi-box-arrow-left d-sm-none"></i>
+                        <img src="/public/img/logout.png" alt="hugenerd" width="50" height="50" class=" d-none d-sm-inline mx-1 text-small">
+                        <span class="d-none d-sm-inline mx-1 text-small">Salir</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-light text-small shadow">
-                        <li><a class="dropdown-item" href="/logout">Sign out</a></li>
-                    </ul>
                 </div>
+                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 d-none d-sm-inline mx-1 text-small"><p><em><a href="https://www.solutecvzla.com" class="text-light">www.solutecvzla.com</a></em></p></div>
             </div>
         </div>
         <script src="/js/sweetalert2.all.min.js"></script>
 
-        <div class="col py-3">
+        <div class="col-10  py-3">
           <%- body %>
         </div>
     </div>
-</div>
+  </div>
 
 <div class="modal fade" id="editUser_<%=user.user%>"  tabindex="-1" aria-labelledby="exampleModalLabelPass" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Crear un nuevo usuario</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Cambio de clave</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body">
@@ -96,60 +107,9 @@
 
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    (function () {
-      'use strict'
-        console.log("funcion cargada")
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.querySelectorAll('.needs-validation')
-      console.log('---------------------')
-      console.log(forms)
-      // Loop over them and prevent submission
-      Array.prototype.slice.call(forms)
-        .forEach(function (form) {
-          form.addEventListener('submit', function (event) {
-            if (!form.checkValidity()) {
-              event.preventDefault()
-              event.stopPropagation()
-            }
-    
-            form.classList.add('was-validated')
-          }, false)
-        })
-    })();
+<script src="/public/js/functions.js"></script>
 
 
-    function validateForm2(obj,id){
-      let form = obj
-      let modal = document.getElementById('editUser_'+id)
-      let p1 = document.getElementById('password_'+id);
-      let p2 = document.getElementById('password2_'+id);
-      var confirm = document.getElementById('p_'+id);
-      console.log('validate this form')
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-          form.classList.add('was-validated')
-          modal.classList.add('was-validated')
-        }else if (p1.value != p2.value){
-            confirm.innerHTML = "Las claves no coinciden";
-            p2.classList.remove('is-valid');
-            p2.classList.add('is-invalid');
-            p2.style.borderColor = "red"
-            modal.classList.add('was-validated')
-            event.preventDefault();
-          }else{
-              console.log('pass match')
-              p2.classList.remove('is-ivalid');
-              p2.classList.add('is-valid');
-              p2.style.borderColor = "green"
-              confirm.innerHTML = "";
-        }
-    }
-
-
-</script>
 <% if(alert){ %>
     <script>
       Swal.fire({

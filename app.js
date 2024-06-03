@@ -20,6 +20,7 @@ app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 app.use('/js', express.static(__dirname + '/node_modules/sweetalert2/dist'));
 app.use('/public', express.static(__dirname + '/public'));
+app.use('/icons', express.static(__dirname + '/node_modules/bootstrap-icons/font'));
 
 app.listen(port, ()=>{
     Logguer.info('App Started with port: '+port)

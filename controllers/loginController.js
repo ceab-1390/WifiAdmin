@@ -1,13 +1,27 @@
-const {User} = require('../models/userLoginModel');
+const {User,testConnection} = require('../models/userLoginModel');
 const Logguer = require('../logguer/logger')
 const Bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 
-module.exports.index = (req,res) =>{
+module.exports.index =async (req,res) =>{
     let user = req.user
     res.status(200).clearCookie('authToken')
-    res.render('login',{layout:false,alert:false,user});
+    let test = await testConnection()
+    if (!test){
+        res.render('login',{
+            layout:false,
+            alert:true,
+            alertTitle: 'Error',
+            alertMessage: 'No se pudo conectar a base de datos!!!',
+            alertIcon: 'error',
+            showConfirmButton: true,
+            ruta: '',
+            user
+        });
+    }else{
+        res.render('login',{layout:false,alert:false,user});
+    }
 }
 
 module.exports.logIn = async (req,res) => {

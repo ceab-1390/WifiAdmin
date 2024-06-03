@@ -34,7 +34,7 @@ module.exports.createOne = async (req,res) =>{
             res.render('gestionarUsuarios',{
                 title: 'Usuarios del sistema',
                 alert:true,
-                alertTitle: 'Advertnencia',
+                alertTitle: 'Exito!!!',
                 alertMessage: 'Registro exitoso',
                 alertIcon: 'success',
                 showConfirmButton: true,

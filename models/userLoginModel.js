@@ -4,7 +4,7 @@ const Logguer = require('../logguer/logger');
 class User {
     static async findOne(user) {
         try {
-            const result = await pool.query('SELECT * FROM users WHERE username = $1', [user]);
+            const result = await pool.query('SELECT * FROM users WHERE username = LOWER($1)', [user]);
             return result.rows[0];
         } catch (error) {
             Logguer.error(error)
@@ -40,7 +40,7 @@ class User {
 
     static async validate(user){
         try {
-            let valid = await pool.query('SELECT * FROM users WHERE username = $1', [user]);
+            let valid = await pool.query('SELECT * FROM users WHERE username = LOWER($1)', [user]);
             if (valid.rowCount == 1){
                 return true
             }else{
@@ -71,7 +71,7 @@ class User {
 
     static async validateId(user){
         try {
-            let valid = await pool.query('SELECT * FROM users WHERE username = $1', [user]);
+            let valid = await pool.query('SELECT * FROM users WHERE username = LOWER($1)', [user]);
             if (valid.rowCount == 1){
                 return valid.rows[0]
             }else{
@@ -97,7 +97,7 @@ class User {
         try {
             const username = data.username;
             const password = data.password;
-            const change = await pool.query('UPDATE users SET password = $1 WHERE username = $2',[password,username]);
+            const change = await pool.query('UPDATE users SET password = $1 WHERE username = LOWER($2)',[password,username]);
             return true;
         } catch (error) {
             Logguer.error(error);
@@ -105,7 +105,7 @@ class User {
         }
     };
 
-    static async validateAdmin(user){
+    /*static async validateAdmin(user){
         try {
             const exists = await pool.query('SELECT admin,username FROM users WHERE admin = true');
             console.log(exists)
@@ -114,7 +114,19 @@ class User {
             Logguer.error(error)
             return false           
         }
+    }*/
+
+}
+
+async function testConnection() {
+    try {
+        const result = await pool.query('SELECT version();');
+        console.log('Conexión a DB exitosa!');
+        return true
+    } catch (error) {
+        Logguer.error( error);
+        return false
     }
 }
 
-module.exports = {User}
+module.exports = {User,testConnection}

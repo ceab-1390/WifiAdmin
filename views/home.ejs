@@ -1,0 +1,26 @@
+
+<div class="d-flex ">
+    <%nasClients.forEach(nas =>{%>
+        <div class="card mt-3  card-size-sm me-md-3 bg-white-glass">
+            <div class="card-title text-center">
+                <h5 class="text-center"></h5><%=nas.shortname%></h5>
+            </div>
+            <div class="card-body text-center">
+                <i class="bi bi-router fs-1 red" id="<%=nas.nasname%>"></i>
+            </div>
+            <di class="text-center">
+                <%=nas.nasname%>
+            </di>
+        </div>
+    <%})%>
+</div>
+<div class="d-flex mt-3">
+    <div class="card card-size-xl bg-white-glass">
+        <div class="card-title">
+            <h5 class="text-center">Test</h5>
+        </div>
+        <div class="card-body ">
+            <iframe class="iframe-test" src="https://fast.com/es"></iframe>
+        </div>
+    </div>
+</div>

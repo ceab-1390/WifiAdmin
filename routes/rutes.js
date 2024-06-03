@@ -18,8 +18,22 @@ router.post('/userChangePassword',midleware.loguedIn,userController.editPassword
 //router.get('/user',userController.createOne);
 
 //radius gestion routes
-router.get('/usersWifi',midleware.loguedIn);
 router.get('/showNas',midleware.loguedIn,radiusController.showNas);
+router.post('/showNas/create',midleware.loguedIn,radiusController.createNas);
+router.post('/showNas/edit',midleware.loguedIn,radiusController.editNas);
+router.post('/nasDelete/:id',midleware.loguedIn,radiusController.deleteNas);
+
+//radius gestions usuarios radcheck
+router.get('/usersRadius/:page',midleware.loguedIn,radiusController.showradcheck);
+router.post('/userRadius/create',midleware.loguedIn,radiusController.radcheckCreate);
+router.post('/userRadius/edit/:page',midleware.loguedIn,radiusController.radcheckEdit);
+router.post('/userRadius/delete/:id',midleware.loguedIn,radiusController.radcheckDelete);
+
+//radius audit
+router.get('/auditRadius/:page',midleware.loguedIn,radiusController.showAudit);
+router.get('/auditRadius',midleware.loguedIn,radiusController.showAuditPage);
+
+
 
 
 module.exports = router;
